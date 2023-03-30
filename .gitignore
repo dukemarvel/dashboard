@@ -1,0 +1,47 @@
+# .gitignore
+
+# Django
+*.pyc
+*.pyo
+__pycache__/
+*.sqlite3
+db.sqlite3
+
+# Python
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+.Python
+env/
+*.venv
+venv/
+ENV/
+env.bak/
+.venv.bak/
+*.egg-info/
+dist/
+build/
+docs/_build/
+*.swp
+*.bak
+*.cache
+*.log
+*.tmp
+*.txt
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Frontend build files
+/frontend/build/
+
+# IDEs
+.vscode/
+.idea/
+
+# Operating System
+.DS_Store
+Thumbs.db
