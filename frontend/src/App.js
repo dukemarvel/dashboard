@@ -11,40 +11,53 @@ function App() {
       const result = await axios('http://localhost:8000/api/equitydata/');
       setData(result.data);
     };
-
-    fetchData();
-    const intervalId = setInterval(fetchData, 60000); // Fetch data every 60 seconds (60000 ms)
-
-    return () => clearInterval(intervalId); // Clean up the interval when the component is unmounted
+  
+    fetchData(); // Fetch the data immediately on component mount
+  
+    const interval = setInterval(() => {
+      fetchData(); // Fetch the data periodically
+    }, 5000); // 5 seconds
+  
+    return () => clearInterval(interval); // Clear the interval on component unmount
   }, []);
+  
 
   useEffect(() => {
     if (data.length > 0) {
-      const trace1 = {
-        x: data.map(d => d.timestamp),
-        y: data.map(d => d.equity),
-        mode: 'lines',
-        name: 'Equity',
-      };
-      const trace2 = {
-        x: data.map(d => d.timestamp),
-        y: data.map(d => d.balance),
-        mode: 'lines',
-        name: 'Balance',
-      };
-      const layout = {
-        title: 'Historical Equity and Balance',
-        xaxis: { title: 'Timestamp' },
-        yaxis: { title: 'Equity and Balance' },
-      };
-      const config = { responsive: true };
-      Plot.newPlot('equity-chart', [trace1, trace2], layout, config);
+      const accountIds = Array.from(new Set(data.map(d => d.account_id)));
+
+      accountIds.forEach(accountId => {
+        const accountData = data.filter(d => d.account_id === accountId);
+
+        const trace1 = {
+          x: accountData.map(d => d.timestamp),
+          y: accountData.map(d => d.equity),
+          mode: 'lines',
+          name: 'Equity',
+        };
+        const trace2 = {
+          x: accountData.map(d => d.timestamp),
+          y: accountData.map(d => d.balance),
+          mode: 'lines',
+          name: 'Balance',
+        };
+        const layout = {
+          title: `Historical Equity and Balance for Account ${accountId}`,
+          xaxis: { title: 'Timestamp' },
+          yaxis: { title: 'Equity and Balance' },
+        };
+        const config = { responsive: true };
+        Plot.newPlot(`equity-chart-${accountId}`, [trace1, trace2], layout, config);
+      });
     }
   }, [data]);
 
   return (
     <div className="App">
-      <div id="equity-chart"></div>
+      {data.length > 0 &&
+        Array.from(new Set(data.map(d => d.account_id))).map(accountId => (
+          <div key={accountId} id={`equity-chart-${accountId}`}></div>
+        ))}
     </div>
   );
 }

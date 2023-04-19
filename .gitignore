@@ -45,3 +45,10 @@ yarn-error.log
 # Operating System
 .DS_Store
 Thumbs.db
+
+
+# MetaTrader terminals
+backend/MetaTrader 5-*
+
+# dotenv files
+*.env

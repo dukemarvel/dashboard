@@ -11,10 +11,35 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+backend_dir = os.path.dirname(BASE_DIR)
+
+ACCOUNT1_PATH = os.path.join(backend_dir, 'MetaTrader 5-3', 'terminal64.exe')
+ACCOUNT2_PATH = os.path.join(backend_dir, 'MetaTrader 5', 'terminal64.exe')
+ACCOUNT3_PATH = os.path.join(backend_dir, 'MetaTrader 5-2', 'terminal64.exe')
+
+
+ACCOUNT1_SERVER = os.environ["ACCOUNT1_SERVER"]
+ACCOUNT1_LOGIN = int(os.environ["ACCOUNT1_LOGIN"])
+ACCOUNT1_PASSWORD = os.environ["ACCOUNT1_PASSWORD"]
+
+
+ACCOUNT2_SERVER = os.environ["ACCOUNT2_SERVER"]
+ACCOUNT2_LOGIN = int(os.environ["ACCOUNT2_LOGIN"])
+ACCOUNT2_PASSWORD = os.environ["ACCOUNT2_PASSWORD"]
+
+
+ACCOUNT3_SERVER = os.environ["ACCOUNT3_SERVER"]
+ACCOUNT3_LOGIN = int(os.environ["ACCOUNT3_LOGIN"])
+ACCOUNT3_PASSWORD = os.environ["ACCOUNT3_PASSWORD"]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -80,6 +105,10 @@ TEMPLATES = [
     },
 ]
 
+TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
+TEMPLATES[0]['APP_DIRS'] = False
+TEMPLATES[0]['DIRS'] = [TEMPLATES_DIR]
+
 WSGI_APPLICATION = 'trading_dashboard.wsgi.application'
 
 
@@ -129,6 +158,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Add the build/static directory from  frontend
+STATICFILES_DIRS = [
+    os.path.join(str(BASE_DIR), '../frontend/build/static'),
+]
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

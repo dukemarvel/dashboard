@@ -12,6 +12,7 @@ mongoengine = "*"
 djangorestframework = "*"
 django-rest-framework-mongoengine = "*"
 django-cors-headers = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
