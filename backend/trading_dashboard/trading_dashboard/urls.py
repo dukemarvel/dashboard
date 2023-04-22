@@ -26,5 +26,5 @@ router.register(r'equitydata', EquityDataViewSet, basename='equitydata')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    re_path(r'^.*', TemplateView.as_view(template_name='index.html')),
+    
 ]

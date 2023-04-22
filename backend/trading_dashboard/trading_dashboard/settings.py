@@ -105,9 +105,7 @@ TEMPLATES = [
     },
 ]
 
-TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
-TEMPLATES[0]['APP_DIRS'] = False
-TEMPLATES[0]['DIRS'] = [TEMPLATES_DIR]
+
 
 WSGI_APPLICATION = 'trading_dashboard.wsgi.application'
 
@@ -160,9 +158,7 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # Add the build/static directory from  frontend
-STATICFILES_DIRS = [
-    os.path.join(str(BASE_DIR), '../frontend/build/static'),
-]
+
 
 
 # Default primary key field type
